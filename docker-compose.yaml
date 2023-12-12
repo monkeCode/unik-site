@@ -26,8 +26,6 @@ services:
     volumes:
       - ./client/public:/usr/src/app/public/
       - ./client/src:/usr/src/app/src/
-      - django_static_volume:/home/src/app/static
-      - django_media_volume:/home/src/app/media
 
   build:
     build: 

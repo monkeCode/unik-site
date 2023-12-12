@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-cr1-7g2+=#t9o2r*(dw6*$_2r*g%ik0tc6&e@ky(-=2sal-tht
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["front", "0.0.0.0", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -40,11 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
     "drf_yasg",
-    
-    'employees',
-    'recruters',
-]
+    "graphene_django",
 
+    "hire",
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -130,13 +129,18 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATIC_URL = "static/"
+STATIC_URL = "static-django/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = "media/"
+MEDIA_URL = "media-django/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+GRAPHENE = {
+    "SCHEMA": "unikSite.schema.schema"
+}
