@@ -89,7 +89,7 @@ class Resume(models.Model):
         verbose_name_plural = ("Resumes")
 
     def __str__(self):
-        return self.employee + " " + self.post
+        return str(self.employee) + " " + str(self.post)
 
     def get_absolute_url(self):
         return reverse("Resume_detail", kwargs={"pk": self.pk})
@@ -106,7 +106,7 @@ class Vacancy(models.Model):
 
 
     def __str__(self):
-        return self.company + " " + self.post
+        return str(self.company) + " " + str(self.post)
 
     class Meta:
         verbose_name = ("Vacancy")

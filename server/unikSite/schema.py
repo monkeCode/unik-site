@@ -1,36 +1,9 @@
 import graphene
-from graphene_django import DjangoObjectType
+from graphene_django import DjangoListField
 import hire.models as models
+import hire.mutations as mutations
+from hire.types import *
 
-class CompanyType(DjangoObjectType):
-     class Meta:
-        model = models.Company
-        fields = "__all__"
-
-class RecruterType(DjangoObjectType):
-    class Meta:
-        model = models.Recruter
-        exclude = ("login", "password")
-
-class EmployeesType(DjangoObjectType):
-    class Meta:
-        model = models.Employee
-        exclude = ("login", "password")
-
-class PostType(DjangoObjectType):
-    class Meta:
-        model = models.Post
-        fields = "__all__"
-
-class ResumeType(DjangoObjectType):
-    class Meta:
-        model = models.Resume
-        fields = "__all__"
-    
-class VacancyType(DjangoObjectType):
-    class Meta:
-        model = models.Vacancy
-        fields = "__all__"
 
 class Query(graphene.ObjectType):
     companies = graphene.List(CompanyType)
@@ -38,6 +11,9 @@ class Query(graphene.ObjectType):
 
     recruters = graphene.List(RecruterType)
     recruter = graphene.Field(RecruterType, id=graphene.Int(required=True))
+
+    posts = DjangoListField(PostType)
+    post = graphene.Field(PostType, id=graphene.Int(required=True))
 
     def resolve_companies(root, info):
         return models.Company.objects.all() 
@@ -57,5 +33,14 @@ class Query(graphene.ObjectType):
         except models.Recruter.DoesNotExist:
             return None
 
+    def resolve_post(root, info, id):
+        try:
+            return models.Post.objects.get(pk=id)
+        except models.Post.DoesNotExist:
+            return None
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    company = mutations.CompanyMutation.Field()
+    delete_resume = mutations.ResumeDeletion.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
