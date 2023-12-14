@@ -28,8 +28,8 @@ class ResumeDeletion(graphene.Mutation):
 
     def mutate(self, info, id):
         try:
-            models.Resume.objects.delete(pk=id)
-        except:
+            models.Resume.objects.get(pk=id).delete()
+        except models.Recruter.DoesNotExist:
             return ResumeDeletion(result= False)
         
         return ResumeDeletion(result= False)
@@ -37,3 +37,17 @@ class ResumeDeletion(graphene.Mutation):
 class VacancyMutation(SerializerMutation):
     class Meta:
         serializer_class = serializers.VacancySerializer
+
+class VacancyDeletion(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+
+    result = graphene.Boolean()
+
+    def mutate(self, info, id):
+        try:
+            models.Vacancy.objects.get(pk=id).delete()
+        except models.Vacancy.DoesNotExist:
+            return VacancyDeletion(result= False)
+        
+        return VacancyDeletion(result= False)
