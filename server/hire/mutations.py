@@ -2,7 +2,6 @@ import hire.serializers as serializers
 from graphene_django.rest_framework.mutation import SerializerMutation
 import graphene
 import hire.models as models
-import hire.types as types
 
 class CompanyMutation(SerializerMutation):
     class Meta:

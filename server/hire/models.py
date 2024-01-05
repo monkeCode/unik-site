@@ -24,7 +24,9 @@ class Company(models.Model):
 class Recruter(models.Model):
 
     id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, verbose_name=("company"),related_name="recruters", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, verbose_name=("company"), 
+                                related_name="recruters", 
+                                on_delete=models.CASCADE)
     name = models.CharField(("name"), max_length=50)
     last_name = models.CharField(("last_name"), max_length=50)
     number = models.CharField(("number"), max_length=20)
@@ -78,8 +80,10 @@ class Post(models.Model):
 class Resume(models.Model):
 
     id = models.AutoField(primary_key=True)
-    employee = models.ForeignKey(Employee, verbose_name=("Employee"), on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="resumes", on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, verbose_name=("Employee"), 
+                                 on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="resumes", 
+                             on_delete=models.CASCADE)
     creating_date = models.DateTimeField(auto_now=True)
     salary = models.IntegerField()
     description = models.TextField()
@@ -97,8 +101,10 @@ class Resume(models.Model):
 class Vacancy(models.Model):
 
     id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, verbose_name=("Employee"), on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancys", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, verbose_name=("Employee"), 
+                                on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancys", 
+                             on_delete=models.CASCADE)
     creating_date = models.DateTimeField(auto_now=True)
     salary = models.IntegerField()
     description = models.TextField()

@@ -5,12 +5,16 @@ services:
     restart: "unless-stopped"
     expose:
       - 8000
+    depends_on: ["database", "authification"]
     ports:
       - 8000:8000
     volumes:
       - ./server:/usr/src/app/
       - django_static_volume:/usr/src/app/static
       - django_media_volume:/usr/src/app/media
+
+  authification:
+    build: "./auth"
 
   front:
     build: "./client"
@@ -26,6 +30,14 @@ services:
     volumes:
       - ./client/public:/usr/src/app/public/
       - ./client/src:/usr/src/app/src/
+
+  database:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=usr
+      - POSTGRES_PASSWORD=MegaGigaPass12345
+      - POSTGRES_DB=mainDb
 
   build:
     build: 
