@@ -32,9 +32,7 @@ class Recruter(models.Model):
     number = models.CharField(("number"), max_length=20)
     birth = models.DateField(("date of birth"), auto_now=False, auto_now_add=False)
     is_male = models.BooleanField(("is_male"))
-    login = models.CharField(("login"), max_length=50)
-    password = models.CharField(("password"), max_length=50)
-
+    key = models.CharField(("key"), max_length=50)
     class Meta:
         verbose_name = ("Recruter")
         verbose_name_plural = ("Recruters")
@@ -54,8 +52,7 @@ class Employee(models.Model):
     number = models.CharField(("number"), max_length=20)
     birth = models.DateField(("date of birth"), auto_now=False, auto_now_add=False)
     is_male = models.BooleanField(("is_male"))
-    login = models.CharField(("login"), max_length=50)
-    password = models.CharField(("password"), max_length=50)
+    key = models.CharField(("key"), max_length=50)
 
     class Meta:
         verbose_name = ("Employee")

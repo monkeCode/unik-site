@@ -36,8 +36,7 @@ class Query(graphene.ObjectType):
         return models.Resume.objects.all()
     
     @authification(UserType.employee)
-    def resolve_company(self, info, id, user):
-        print(info.context.headers["key"])
+    def resolve_company(self, info, id, user): 
         try:
             return models.Company.objects.get(pk=id)
         except models.Company.DoesNotExist:

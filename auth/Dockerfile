@@ -12,5 +12,3 @@ RUN pip install -r requirements.txt
 COPY . .
 
 EXPOSE 50051
-
-ENTRYPOINT ["python", "main.py"]

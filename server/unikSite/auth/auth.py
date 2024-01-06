@@ -51,7 +51,7 @@ class Authenticator(object):
         
         req = authification_pb2.LoginRequest(login = username, password=password)
         key = self.stub.Login(req)
-        return key
+        return key.key
 
     def register(self, username, password, email, type):
         """register new user
@@ -77,7 +77,7 @@ class Authenticator(object):
                                                 email=email, type=type)
         
         key = self.stub.Register(req)
-        return key
+        return key.key
     
     def get_user_by_key(self, key):
         if not self.connected:
@@ -85,7 +85,7 @@ class Authenticator(object):
         
         req = authification_pb2.KeyMessage(key=key)
         user = self.stub.Accert(req)
-
+        print(user)
         return user
 
 class UserType(Enum):
@@ -96,7 +96,8 @@ class UserType(Enum):
 def authification(usr_type:UserType):
     def wrapper(func):
         def inner(*args, **kwargs):
-            key = args[1].context.headers["key"]
+            key = args[1].context.COOKIES["key"]
+            print(key)
             aut = Authenticator()
             user = aut.get_user_by_key(key)
             if(usr_type.value == "any" or user.type == usr_type.value):
