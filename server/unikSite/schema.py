@@ -4,7 +4,7 @@ import hire.models as models
 import hire.mutations as mutations
 from hire.types import CompanyType, RecruterType, EmployeesType, PostType
 from hire.types import ResumeType, VacancyType
-from unikSite.auth.auth import authification, UserType
+
 
 class Query(graphene.ObjectType):
     companies = DjangoListField(CompanyType)
@@ -35,8 +35,7 @@ class Query(graphene.ObjectType):
             return models.Resume.objects.filter(employee__id = emp_id)
         return models.Resume.objects.all()
     
-    @authification(UserType.employee)
-    def resolve_company(self, info, id, user): 
+    def resolve_company(self, info, id): 
         try:
             return models.Company.objects.get(pk=id)
         except models.Company.DoesNotExist:

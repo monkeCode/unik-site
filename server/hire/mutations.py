@@ -2,6 +2,7 @@ import hire.serializers as serializers
 from graphene_django.rest_framework.mutation import SerializerMutation
 import graphene
 import hire.models as models
+from unikSite.auth.auth import authification, UserType
 
 class CompanyMutation(SerializerMutation):
     class Meta:
@@ -25,13 +26,19 @@ class ResumeDeletion(graphene.Mutation):
 
     result = graphene.Boolean()
 
-    def mutate(self, info, id):
+    @authification(UserType.employee)
+    def mutate(self, info, id, user):
+        employee = models.Employee.objects.get(key=user["key"])
         try:
-            models.Resume.objects.get(pk=id).delete()
-        except models.Recruter.DoesNotExist:
+            res = models.Resume.objects.get(pk=id)
+            if res.employee == employee:
+                res.delete()
+            else:
+                return ResumeDeletion(result= False) 
+        except models.Resume.DoesNotExist:
             return ResumeDeletion(result= False)
         
-        return ResumeDeletion(result= False)
+        return ResumeDeletion(result= True)
 
 class VacancyMutation(SerializerMutation):
     class Meta:
@@ -43,10 +50,16 @@ class VacancyDeletion(graphene.Mutation):
 
     result = graphene.Boolean()
 
-    def mutate(self, info, id):
+    @authification(UserType.recruter)
+    def mutate(self, info, id, user):
+        rec = models.Recruter.objects.get(key=user["key"])
         try:
-            models.Vacancy.objects.get(pk=id).delete()
+            vac = models.Vacancy.objects.get(pk=id)
+            if vac.company == rec.company:
+                vac.delete()
+            else :
+                return VacancyDeletion(result= False) 
         except models.Vacancy.DoesNotExist:
             return VacancyDeletion(result= False)
         
-        return VacancyDeletion(result= False)
+        return VacancyDeletion(result= True)

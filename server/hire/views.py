@@ -1,8 +1,11 @@
 from django.http.response import HttpResponse
 import unikSite.auth.auth as auth
 from django.views.decorators.csrf import csrf_exempt
-from hire.models import Employee
+from hire.models import Employee, Recruter
 import json
+import hire.serializers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 # Create your views here.
 @csrf_exempt
 def login(request):
@@ -50,3 +53,18 @@ def logout(request):
         return response
     return HttpResponse('allow only POST requests', status =404)
 
+@api_view(["GET"])
+def get_me(request):
+    try:
+        key= request.COOKIES["key"]
+    except KeyError:
+        return HttpResponse("not authorized", status=401)
+    user = auth.Authenticator().get_user_by_key(key)
+    if(user.type == "employee"):
+        emp = Employee.objects.get(key=key)
+        data = hire.serializers.EmployeeSerializer(emp)
+        return Response(data.data, status=200) 
+    if(user.type == "recruter"):
+        emp = Recruter.objects.get(key=key)
+        data = hire.serializers.RecruterSerializer(emp)
+        return Response(data.data, status=200)

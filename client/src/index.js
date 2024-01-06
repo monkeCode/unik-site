@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axios from 'axios';
+
+if(window.location.hostname === "localhost")
+  axios.defaults.baseURL = 'localhost:8000';
+else axios.defaults.baseURL = window.location.hostname
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

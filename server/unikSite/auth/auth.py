@@ -100,8 +100,9 @@ def authification(usr_type:UserType):
             print(key)
             aut = Authenticator()
             user = aut.get_user_by_key(key)
+            us = {"type": user.type, "key": key, "email": user.email}
             if(usr_type.value == "any" or user.type == usr_type.value):
-                kwargs["user"] = user
+                kwargs["user"] = us
                 return func(*args, **kwargs)
             raise Exception("permission denied")
         return inner
