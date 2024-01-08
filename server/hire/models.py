@@ -12,7 +12,7 @@ class Company(models.Model):
 
     class Meta:
         verbose_name = ("Compoany")
-        verbose_name_plural = ("Compoanys")
+        verbose_name_plural = ("Compoanies")
 
     def __str__(self):
         return self.name
@@ -98,14 +98,14 @@ class Resume(models.Model):
 class Vacancy(models.Model):
 
     id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, verbose_name=("Employee"), 
+    company = models.ForeignKey(Company, verbose_name=("Company"), 
                                 on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancys", 
+    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancies", 
                              on_delete=models.CASCADE)
     creating_date = models.DateTimeField(auto_now=True)
     salary = models.IntegerField()
     description = models.TextField()
-    resumes = models.ManyToManyField(Resume, verbose_name=("vacancy"))
+    resumes = models.ManyToManyField(Resume, verbose_name=("resumes"), blank=True)
 
 
     def __str__(self):
@@ -113,7 +113,7 @@ class Vacancy(models.Model):
 
     class Meta:
         verbose_name = ("Vacancy")
-        verbose_name_plural = ("Vacancys")
+        verbose_name_plural = ("Vacancies")
 
 
     def get_absolute_url(self):

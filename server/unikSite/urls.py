@@ -12,4 +12,5 @@ urlpatterns = [
     path("api/usrregister", hire.views.register),
     path("api/usrlogout", hire.views.logout),
     path("api/getme", hire.views.get_me),
+    path("api/addresume/<int:vacId>/<int:resId>", hire.views.send_resume),
 ]

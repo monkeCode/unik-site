@@ -12,6 +12,7 @@ export default function Home()
       }
     `;
     const { loading, error, data } = useQuery(GET_COMPANIES);
+    
     if (loading)
         return (<p>loading</p>);
     if (error)

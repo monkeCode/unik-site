@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["front", "0.0.0.0", "localhost", "127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://localhost"]
 
 # Application definition
 
@@ -57,10 +58,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'unikSite.urls'
-
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    "http://build"
+    "http://build",
+    "http://localhost"
 ]
 
 TEMPLATES = [
@@ -148,4 +151,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
     "SCHEMA": "unikSite.schema.schema"
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }

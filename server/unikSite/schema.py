@@ -23,7 +23,8 @@ class Query(graphene.ObjectType):
     resume = graphene.Field(ResumeType, id=graphene.Int(required = True))
 
     vacancies = graphene.List(VacancyType, company_id = graphene.Int(required=False))
-    resume = graphene.Field(ResumeType, id=graphene.Int(required = True))
+    vacancy = graphene.Field(VacancyType, id=graphene.Int(required=True))
+
     
     def resolve_vacancies(self, info, company_id=None):
         if company_id is not None:
