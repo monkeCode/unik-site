@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import {routers} from './routers';
 import NavMenu from './components/NavMenu';
 
-const uri = "http://"+(window.location.hostname === "localhost"?'localhost:8000':window.location.hostname) + '/graphql';
+const uri = "http://"+(window.location.host === "localhost:3000"?'localhost:8000':window.location.host) + '/graphql';
 const link = createHttpLink({
   uri: uri,
   credentials: 'include'
