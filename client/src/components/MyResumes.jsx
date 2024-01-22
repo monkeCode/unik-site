@@ -1,14 +1,15 @@
 
 import {gql, useQuery, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import {Card, CardTitle, CloseButton, Tooltip} from "reactstrap";
+import {Card, CardTitle, CloseButton, Tooltip, Button} from "reactstrap";
 import getUser from "../useUser";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Resume({resume, deleteFunc})
 {
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const toggle = () => setTooltipOpen(!tooltipOpen);
+    const navigate = useNavigate();
     
 
         var vacancies = (
@@ -35,6 +36,7 @@ function Resume({resume, deleteFunc})
             <p>Желаемый Оклад: {resume.salary} руб</p>
             <p>Дата создания: {resume.creatingDate.split("T")[0]}</p>
         {resume.vacancies.length > 0 && vacancies}
+        <Button onClick={() => navigate("/resume/"+resume.id+"/edit")}>Изменить</Button>
     </Card>)
 }
 
@@ -66,7 +68,7 @@ function ResumeList({userId})
       }`;
       const {loading, error, data, refetch } = useQuery(getResumes);
 
-      const [delRes, res] = useMutation( gql`mutation delete($id:Int!) {
+      const [delRes, result] = useMutation( gql`mutation delete($id:Int!) {
         deleteResume(id:$id)
         {
           result

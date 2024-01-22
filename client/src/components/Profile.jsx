@@ -5,7 +5,7 @@ function BaseProfile({user})
 {
     return (<>
         <img src="/user.png" alt="user icon" className="center"/>
-        <p>Имя: {user.name}</p>;
+        <p>Имя: {user.name}</p>
         <p>Фамилия: {user.last_name}</p>
         <p>Номер: {user.number}</p>
         <p>Дата рождения: {user.birth}</p>
@@ -27,8 +27,8 @@ export function EmployeeProfile({user})
     <div className="m-auto">
         <BaseProfile user={user}/>
         <div>
-        <Button className="mt-3" onClick={()=>navigate("/myresumes")}>Мои резюме</Button>
-        <Button className="mt-3">Создать новое резюме</Button>
+        <Button className="mt-3" onClick={()=>navigate("/myresumes")}>Мои резюме</Button> <br/>
+        <Button className="mt-3" onClick={()=> navigate("/createresume")}>Создать новое резюме</Button><br/>
         <Button color="link" onClick={loguot}>Выйти</Button>
         </div>
     </div>)
@@ -47,8 +47,8 @@ export function RecruterProfile({user})
     return(
         <div className="m-auto">
             <BaseProfile user={user}/>
-                <Button className="mt-3">Вакансии компании</Button>
-                <Button className="mt-3">Создать новую вакансию</Button>
+                <Button className="mt-3">Вакансии компании</Button><br/>
+                <Button className="mt-3" >Создать новую вакансию</Button><br/>
                 <Button color="link" onClick={loguot}>Выйти</Button>
         </div>)
 }

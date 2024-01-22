@@ -82,7 +82,7 @@ class Mutation(graphene.ObjectType):
     employee = mutations.EmployeeMutation.Field()
     vacancy = mutations.VacancyMutation.Field()
     delete_vacancy = mutations.VacancyDeletion.Field()
-    resume = mutations.RecruterMutation.Field()
+    resume = mutations.ResumeMutation.Field()
     delete_resume = mutations.ResumeDeletion.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
