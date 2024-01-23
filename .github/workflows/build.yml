@@ -1,4 +1,4 @@
-name: CI
+name: CICD
 on: 
     push:
         branches: main
@@ -26,3 +26,25 @@ jobs:
       - uses: actions/checkout@v3
       - name: test
         run: docker compose run --entrypoint pytest server
+  
+  deploy:
+      needs: [tests, linter]
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'push' }}
+      steps:
+        - uses: actions/checkout@v4
+        - name: put key
+          env: # Or as an environment variable
+            KEY: ${{ secrets.SSHKEY }}
+          run: |
+           mkdir -p ~/.ssh/
+           ssh-keyscan -H left-sock.ru >> ~/.ssh/known_hosts
+           echo $KEY > ~/.ssh/id_rsa
+           sudo chmod 600 ~/.ssh/id_rsa
+        - name: deploy
+          run: |
+           docker context create remote --docker "host=ssh://root@$left-sock.ru"
+           docker-compose --context remote up build -d --build --force-recreate
+        
+
+
