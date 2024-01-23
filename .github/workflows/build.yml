@@ -43,7 +43,7 @@ jobs:
            sudo chmod 600 ~/.ssh/id_rsa
         - name: deploy
           run: |
-           docker context create remote --docker "host=ssh://root@$178.253.40.223"
+           docker context create remote --docker "host=ssh://root@178.253.40.223"
            docker-compose --context remote up build -d --build --force-recreate
         
 
