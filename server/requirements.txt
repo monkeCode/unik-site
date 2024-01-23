@@ -8,3 +8,6 @@ django-guardian
 drf-yasg
 django-cors-headers
 graphene_django
+grpcio
+grpcio-tools
+pytest-django

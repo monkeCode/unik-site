@@ -20,4 +20,9 @@ jobs:
       - name: Run Ruff
         run: ruff check --no-cache --exclude **/migrations/ ./server
 
-        
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: test
+        run: docker compose run --entrypoint pytest server

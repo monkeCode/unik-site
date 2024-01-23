@@ -1,0 +1,29 @@
+
+syntax = "proto2";
+
+service Authentication {
+  rpc Login (LoginRequest) returns (KeyMessage) {}
+  rpc Register (RegisterRequest) returns (KeyMessage) {}
+  rpc Accert (KeyMessage) returns (UserReply) {}
+}
+
+ message LoginRequest {
+  required string login = 1;
+  required string password = 2;
+}
+
+message RegisterRequest {
+  required string login = 1;
+  required string password = 2;
+  required string email = 3;
+  required string type = 4;
+}
+message KeyMessage {
+  required string key = 1;
+}
+
+message UserReply {
+  required int64 id = 1;
+  required string email = 3;
+  required string type = 4;
+}

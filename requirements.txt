@@ -1,9 +1,0 @@
-django
-djangorestframework
-django-filter
-markdown
-PyYAML
-uritemplate
-django-guardian
-drf-yasg
-django-cors-headers

@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["front", "0.0.0.0", "localhost", "127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://localhost"]
 
 # Application definition
 
@@ -57,10 +58,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'unikSite.urls'
-
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    "http://build"
+    "http://build",
+    "http://localhost"
 ]
 
 TEMPLATES = [
@@ -86,9 +89,13 @@ WSGI_APPLICATION = 'unikSite.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+                "NAME": "mainDb",
+                "USER": "usr",
+                "PASSWORD": "MegaGigaPass12345",
+                "HOST": "database",
+                "PORT": "5432",
     }
 }
 
@@ -98,7 +105,8 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation'+
+                '.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -143,4 +151,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
     "SCHEMA": "unikSite.schema.schema"
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }

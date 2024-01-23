@@ -15,6 +15,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # не помещать в буфер потоки stdout и stderr
 ENV PYTHONUNBUFFERED 1
 
+RUN pip install psycopg[binary]
+
 RUN pip install --upgrade pip
 
 RUN pip install gunicorn

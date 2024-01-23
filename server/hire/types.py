@@ -9,12 +9,12 @@ class CompanyType(DjangoObjectType):
 class RecruterType(DjangoObjectType):
     class Meta:
         model = models.Recruter
-        exclude = ("login", "password")
+        exclude = ("key",)
 
 class EmployeesType(DjangoObjectType):
     class Meta:
         model = models.Employee
-        exclude = ("login", "password")
+        exclude = ("key",)
 
 class PostType(DjangoObjectType):
     class Meta:

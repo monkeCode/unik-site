@@ -12,7 +12,7 @@ class Company(models.Model):
 
     class Meta:
         verbose_name = ("Compoany")
-        verbose_name_plural = ("Compoanys")
+        verbose_name_plural = ("Compoanies")
 
     def __str__(self):
         return self.name
@@ -24,15 +24,15 @@ class Company(models.Model):
 class Recruter(models.Model):
 
     id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, verbose_name=("company"),related_name="recruters", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, verbose_name=("company"), 
+                                related_name="recruters", 
+                                on_delete=models.CASCADE)
     name = models.CharField(("name"), max_length=50)
     last_name = models.CharField(("last_name"), max_length=50)
     number = models.CharField(("number"), max_length=20)
     birth = models.DateField(("date of birth"), auto_now=False, auto_now_add=False)
     is_male = models.BooleanField(("is_male"))
-    login = models.CharField(("login"), max_length=50)
-    password = models.CharField(("password"), max_length=50)
-
+    key = models.CharField(("key"), max_length=50)
     class Meta:
         verbose_name = ("Recruter")
         verbose_name_plural = ("Recruters")
@@ -52,8 +52,7 @@ class Employee(models.Model):
     number = models.CharField(("number"), max_length=20)
     birth = models.DateField(("date of birth"), auto_now=False, auto_now_add=False)
     is_male = models.BooleanField(("is_male"))
-    login = models.CharField(("login"), max_length=50)
-    password = models.CharField(("password"), max_length=50)
+    key = models.CharField(("key"), max_length=50)
 
     class Meta:
         verbose_name = ("Employee")
@@ -78,8 +77,10 @@ class Post(models.Model):
 class Resume(models.Model):
 
     id = models.AutoField(primary_key=True)
-    employee = models.ForeignKey(Employee, verbose_name=("Employee"), on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="resumes", on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, verbose_name=("Employee"), 
+                                 on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="resumes", 
+                             on_delete=models.CASCADE)
     creating_date = models.DateTimeField(auto_now=True)
     salary = models.IntegerField()
     description = models.TextField()
@@ -97,12 +98,14 @@ class Resume(models.Model):
 class Vacancy(models.Model):
 
     id = models.AutoField(primary_key=True)
-    company = models.ForeignKey(Company, verbose_name=("Employee"), on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancys", on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, verbose_name=("Company"), 
+                                on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name=("Post"), related_name="vacancies", 
+                             on_delete=models.CASCADE)
     creating_date = models.DateTimeField(auto_now=True)
     salary = models.IntegerField()
     description = models.TextField()
-    resumes = models.ManyToManyField(Resume, verbose_name=("vacancy"))
+    resumes = models.ManyToManyField(Resume, verbose_name=("resumes"), blank=True)
 
 
     def __str__(self):
@@ -110,7 +113,7 @@ class Vacancy(models.Model):
 
     class Meta:
         verbose_name = ("Vacancy")
-        verbose_name_plural = ("Vacancys")
+        verbose_name_plural = ("Vacancies")
 
 
     def get_absolute_url(self):
