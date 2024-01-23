@@ -38,12 +38,12 @@ jobs:
             KEY: ${{ secrets.SSHKEY }}
           run: |
            mkdir -p ~/.ssh/
-           ssh-keyscan -H left-sock.ru >> ~/.ssh/known_hosts
+           ssh-keyscan -H 178.253.40.223 >> ~/.ssh/known_hosts
            echo $KEY > ~/.ssh/id_rsa
            sudo chmod 600 ~/.ssh/id_rsa
         - name: deploy
           run: |
-           docker context create remote --docker "host=ssh://root@$left-sock.ru"
+           docker context create remote --docker "host=ssh://root@$178.253.40.223"
            docker-compose --context remote up build -d --build --force-recreate
         
 
