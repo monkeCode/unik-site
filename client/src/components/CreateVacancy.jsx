@@ -4,7 +4,7 @@ import {Form, Input, Label} from "reactstrap"
 import { useState, useEffect } from "react";
 import getUser from "../useUser"
 
-function Resume({resume, empId})
+function Vacancy({vacancy, companyId})
 {
     const navigate = useNavigate();
     const postReq = gql`query
@@ -16,16 +16,16 @@ function Resume({resume, empId})
       }  
     }`;
 
-    const mutationReq = gql`mutation postResume($input:ResumeMutationInput!)
+    const mutationReq = gql`mutation postvacancy($input:VacancyMutationInput!)
     {
-        resume(input:$input)
+        vacancy(input:$input)
         {
             id
             description
             creatingDate
         }
     }`;
-    const [postResumeMutation, res] = useMutation(mutationReq);
+    const [postVacancyMutation, res] = useMutation(mutationReq);
     
     const {loading, error, data} = useQuery(postReq);
     if(loading) return (<p>loading</p>);
@@ -38,12 +38,12 @@ function Resume({resume, empId})
             "post":e.target[0].value,
             "salary":Number(e.target[1].value),
             "description":e.target[2].value,
-            "employee": String(empId)
+            "company": String(companyId)
         };
 
-        await postResumeMutation({variables:{input:data}});
+        await postVacancyMutation({variables:{input:data}});
         if(res)
-            navigate("/myresumes")
+            navigate("/myvacancies")
         else
             alert("Не удалость создать");
     }
@@ -54,19 +54,19 @@ function Resume({resume, empId})
         let data = {
             "salary":Number(e.target[0].value),
             "description":e.target[1].value,
-            "employee": String(empId),
-            "id":Number(resume.id),
-            "post": String(resume.post.id)
+            "company": String(companyId),
+            "id":Number(vacancy.id),
+            "post": String(vacancy.post.id)
         };
 
-        await postResumeMutation({variables:{input:data}});
+        await postVacancyMutation({variables:{input:data}});
         if(res)
-            navigate("/myresumes")
+            navigate("/myvacancies")
         else
             alert("Не удалость создать");
     }
 
-    if(resume === undefined || resume ===null)
+    if(vacancy === undefined || vacancy === null)
     {
         return(
         <Form onSubmit={onNew} className="w-50 m-auto mt-5">
@@ -96,11 +96,11 @@ function Resume({resume, empId})
     );
 }
 
-function EditResume({id, empId})
+function EditVacancy({id, companyId})
 {
-    const req = gql`query getresume
+    const req = gql`query
     {
-      resume(id:${id})
+      vacancy(id:${id})
       {
         id
         creatingDate
@@ -117,11 +117,11 @@ function EditResume({id, empId})
    if(loading) return (<p>loading</p>);
    if (error) return (<p>{error.message}</p>);
 
-   return (<Resume resume={data.resume} empId={empId}></Resume>);
+   return (<Vacancy vacancy={data.vacancy} companyId={companyId}></Vacancy>);
 
 }
 
-export default function CreateResume()
+export default function CreateVacancy()
 {
     const {id} =useParams();
     console.log(id)
@@ -130,10 +130,10 @@ export default function CreateResume()
         getUser().then(res => setUser(res));
     }, []);
 
-    if (user == null || user.type !== "employee") return (<p>Вы не авторизированны</p>);
+    if (user == null || user.type !== "recruter") return (<p>Вы не авторизированны</p>);
 
     if (id == null) 
-        return (<Resume empId={user.id} />);
+        return (<Vacancy companyId={user.company} />);
 
-    return (<EditResume id={id} empId={user.id}/>);
+    return (<EditVacancy id={id} companyId={user.company}/>);
 }

@@ -32,7 +32,11 @@ function Resume({resume, deleteFunc})
             right:"0px"
             }} id={"delete" + resume.id}>
             </CloseButton>
-        <CardTitle tag='h3'>{resume.post.name}</CardTitle>
+        <CardTitle tag='h3'>
+            <NavLink to={"/resume/" + resume.id}>
+                {resume.post.name}
+            </NavLink>
+            </CardTitle>
             <p>Желаемый Оклад: {resume.salary} руб</p>
             <p>Дата создания: {resume.creatingDate.split("T")[0]}</p>
         {resume.vacancies.length > 0 && vacancies}
