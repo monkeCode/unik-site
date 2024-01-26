@@ -188,7 +188,7 @@ function Vacancy({id})
         <p >{vacancy.description}</p>
         <h3>Оклад: {vacancy.salary} руб</h3>
         <div className='d-flex m-3' style={{justifyContent:"start"}}>
-        <Card className='w-25 me-3' color='dark' outline >
+        <Card className='w-25 me-3 p-2' color='dark' outline >
             <CardTitle tag='h3'>
                 <NavLink href={'/companies/'  + vacancy.company.id}>{vacancy.company.name}</NavLink>
                 
@@ -201,7 +201,7 @@ function Vacancy({id})
                 </CardText>
             </CardBody>
         </Card>
-        <Card className='w-25' color='primary' outline>
+        <Card className='w-25 p-2' color='primary' outline>
             <CardTitle tag='h3' >
                 {vacancy.post.name}
             </CardTitle>

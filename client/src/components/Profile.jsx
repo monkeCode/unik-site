@@ -47,8 +47,8 @@ export function RecruterProfile({user})
     return(
         <div className="m-auto">
             <BaseProfile user={user}/>
-                <Button className="mt-3">Вакансии компании</Button><br/>
-                <Button className="mt-3" >Создать новую вакансию</Button><br/>
+                <Button className="mt-3" onClick={()=>navigate("/myvacancies")}>Вакансии компании</Button><br/>
+                <Button className="mt-3" onClick={()=>navigate("/createvacancy")} >Создать новую вакансию</Button><br/>
                 <Button color="link" onClick={loguot}>Выйти</Button>
         </div>)
 }
