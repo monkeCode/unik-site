@@ -8,6 +8,8 @@ services:
     depends_on: ["database", "authification"]
     ports:
       - 8000:8000
+    environment:
+      - PROD=true
     volumes:
       - ./server:/usr/src/app/
       - django_static_volume:/usr/src/app/static
